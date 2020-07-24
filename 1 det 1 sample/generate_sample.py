@@ -59,14 +59,27 @@ def queue_worker(arguments, results_queue):
 # MAIN CODE
 # -----------------------------------------------------------------------------
 
-if __name__ == '__main__':
+class Unbuffered(object):
+    def __init__(self, stream):
+        self.stream = stream
+    def write(self, data):
+        self.stream.write(data)
+        self.stream.flush()
+    def writelines(self, datas):
+        self.stream.writelines(datas)
+        self.stream.flush()
+    def __getattr__(self, attr):
+        return getattr(self.stream, attr)
+
+def one_det_main(random_seed=-1,noise_random_seed=-1,output_file_name='default.hdf'):
 
     # -------------------------------------------------------------------------
     # Preliminaries
     # -------------------------------------------------------------------------
 
     # Disable output buffering ('flush' option is not available for Python 2)
-    sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)
+    #sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)
+    sys.stdout = Unbuffered(sys.stdout)
 
     # Start the stopwatch
     script_start = time.time()
@@ -122,11 +135,16 @@ if __name__ == '__main__':
     # -------------------------------------------------------------------------
 
     # Set the random seed for this script
-    np.random.seed(config['random_seed'])
+    if random_seed==-1:
+        np.random.seed(config['random_seed'])
+        random_seed = config['random_seed']
+    else:
+        np.random.seed(random_seed)
+
+    if noise_random_seed==-1:
+        noise_random_seed = config['noise_random_seed']
 
     # Define some useful shortcuts
-    random_seed = config['random_seed']
-    noise_random_seed = config['noise_random_seed']
     max_runtime = config['max_runtime']
     bkg_data_dir = config['background_data_directory']
 
@@ -419,10 +437,12 @@ if __name__ == '__main__':
         sample_file_dict['injection_parameters'][key] = value
 
     # Construct the path for the output HDF file
+    if output_file_name=='default.hdf':
+        output_file_name = config['output_file_name']
     output_dir = os.path.join('.', 'output')
     if not os.path.exists(output_dir):
         os.mkdir(output_dir)
-    sample_file_path = os.path.join(output_dir, config['output_file_name'])
+    sample_file_path = os.path.join(output_dir, output_file_name)
 
     # Create the SampleFile object and save it to the specified output file
     sample_file = SampleFile(data=sample_file_dict)
@@ -448,3 +468,11 @@ if __name__ == '__main__':
     # Print the total run time
     print('Total runtime: {:.1f} seconds!'.format(time.time() - script_start))
     print('')
+
+
+
+
+
+if __name__ == '__main__':
+
+    one_det_main()
