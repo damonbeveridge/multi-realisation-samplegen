@@ -511,26 +511,26 @@ class FiltersBuildFiles(object):
                                         ",sample" + str(injection_params["sample_index"])
                                 print("Creating dataset for H1 - " + label)
                                 h1_injection_data_group.create_dataset(label,
-                                        data=snr_sample[self._inj_low[injection_params["sample_index"]]:self._inj_high[injection_params["sample_index"]]])
+                                        data=snr_sample[self._inj_low[injection_params["sample_index"]*self._n_templates+injection_params["template_index"]]:self._inj_high[injection_params["sample_index"]*self._n_templates+injection_params["template_index"]]])
                             else:
                                 label = "template" + str(injection_params["template_index"]) + \
                                         ",sample" + str(injection_params["sample_index"])
                                 print("Creating dataset for L1 - " + label)
                                 l1_injection_data_group.create_dataset(label,
-                                        data=snr_sample[self._inj_low[injection_params["sample_index"]]:self._inj_high[injection_params["sample_index"]]])
+                                        data=snr_sample[self._inj_low[injection_params["sample_index"]*self._n_templates+injection_params["template_index"]]:self._inj_high[injection_params["sample_index"]*self._n_templates+injection_params["template_index"]]])
                         else:
                             if injection_params['det_string'] == "h1_strain":
                                 label = "template" + str(injection_params["template_index"]) + \
                                         ",sample" + str(injection_params["sample_index"])
                                 print("Creating dataset for H1 - " + label)
                                 h1_noise_data_group.create_dataset(label,
-                                        data=snr_sample[self._noise_low[injection_params["sample_index"]]:self._noise_high[injection_params["sample_index"]]])
+                                        data=snr_sample[self._noise_low[injection_params["sample_index"]*self._n_templates+injection_params["template_index"]]:self._noise_high[injection_params["sample_index"]*self._n_templates+injection_params["template_index"]]])
                             else:
                                 label = "template" + str(injection_params["template_index"]) + \
                                         ",sample" + str(injection_params["sample_index"])
                                 print("Creating dataset for L1 - " + label)
                                 l1_noise_data_group.create_dataset(label,
-                                        data=snr_sample[self._noise_low[injection_params["sample_index"]]:self._noise_high[injection_params["sample_index"]]])
+                                        data=snr_sample[self._noise_low[injection_params["sample_index"]*self._n_templates+injection_params["template_index"]]:self._noise_high[injection_params["sample_index"]*self._n_templates+injection_params["template_index"]]])
                     else:
                         if injection_params['sample_type'] == "injection_samples":
                             if injection_params['det_string'] == "h1_strain":
