@@ -316,4 +316,4 @@ def three_det_main():
 
 
 if __name__ == '__main__':
-    main()
+    three_det_main()
