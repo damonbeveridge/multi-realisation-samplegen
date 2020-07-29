@@ -180,12 +180,12 @@ if __name__ == '__main__':
 
             # Select the sample (i.e., the row from the data frame of samples)
             try:
-                sample = df['template_snr_samples']['injection']['H1'][label]
+                sample = df['template_snr_samples']['injection'][label]
             except KeyError:
                 raise KeyError('Given sample_id or template_id is too big!'
                                'Maximum template_id value = {t}. Maximum sample_id value = {s}'.
                    format(t = len(np.copy(templates['template_samples'])) - 1,
-                          s = len(np.copy(injections['injection_samples']['h1_strain']))))
+                          s = len(np.copy(injections['injection_samples']['h1_strain'])))-1)
 
             # Create subplots for H1
             fig, axes1 = plt.subplots(nrows=1)
@@ -193,11 +193,11 @@ if __name__ == '__main__':
             for i, (det_name, det_string) in enumerate([('H1', 'h1_snr')]):
 
                 # axes1[i].plot(grid, sample[det_string], color='C0')
-                axes1[i].plot(df['template_snr_samples']['injection'][det_name][label], color='C0')
+                axes1.plot(df['template_snr_samples']['injection'][label], color='C0')
                 # axes1[i].set_xlim(-seconds_before, seconds_after)
                 # axes1[i].set_ylim(-150, 150)
-                axes1[i].tick_params('y', colors='C0', labelsize=8)
-                axes1[i].set_ylabel('{} SNR'
+                axes1.tick_params('y', colors='C0', labelsize=8)
+                axes1.set_ylabel('{} SNR'
                                     .format(det_name), color='C0', fontsize=8)
 
             # Add the injection parameters to the title
@@ -230,8 +230,8 @@ if __name__ == '__main__':
             plt.figtext(0.5, 0.88, 'Template Parameters:\n' + template_string, fontsize=8,ha='center')
 
             # Set x-labels
-            axes1[0].set_xticklabels([])
-            axes1[0].set_xlabel('Time from event time (in seconds)')
+            axes1.set_xticklabels([])
+            axes1.set_xlabel('Time from event time (in seconds)')
 
             # Adjust the size and spacing of the subplots
             plt.gcf().set_size_inches(12, 6, forward=True)
@@ -258,12 +258,12 @@ if __name__ == '__main__':
 
             # Select the sample (i.e., the row from the data frame of samples)
             try:
-                sample = df['template_snr_samples']['noise']['H1'][label]
+                sample = df['template_snr_samples']['noise'][label]
             except KeyError:
                 raise KeyError('Given noise_id or template_id is too big!'
                                'Maximum template_id value = {t}. Maximum sample_id value = {s}'.
                                format(t = len(np.copy(templates['template_samples'])) - 1,
-                                      s = len(np.copy(injections['noise_samples']['h1_strain']))))
+                                      s = len(np.copy(injections['noise_samples']['h1_strain'])))-1)
 
             # Create subplots for H1
             fig, axes1 = plt.subplots(nrows=1)
@@ -271,11 +271,11 @@ if __name__ == '__main__':
             for i, (det_name, det_string) in enumerate([('H1', 'h1_snr')]):
 
                 # axes1[i].plot(grid, sample[det_string], color='C0')
-                axes1[i].plot(df['template_snr_samples']['noise'][det_name][label], color='C0')
+                axes1.plot(df['template_snr_samples']['noise'][label], color='C0')
                 # axes1[i].set_xlim(-seconds_before, seconds_after)
                 # axes1[i].set_ylim(-150, 150)
-                axes1[i].tick_params('y', colors='C0', labelsize=8)
-                axes1[i].set_ylabel('{} SNR'
+                axes1.tick_params('y', colors='C0', labelsize=8)
+                axes1.set_ylabel('{} SNR'
                                     .format(det_name), color='C0', fontsize=8)
 
             # Add the injection parameters to the title
@@ -294,8 +294,8 @@ if __name__ == '__main__':
             plt.figtext(0.5, 0.9, 'Template Parameters:\n' + template_string, fontsize=8,ha='center')
 
             # Set x-labels
-            axes1[0].set_xticklabels([])
-            axes1[0].set_xlabel('Time from event time (in seconds)')
+            axes1.set_xticklabels([])
+            axes1.set_xlabel('Time from event time (in seconds)')
 
             # Adjust the size and spacing of the subplots
             plt.gcf().set_size_inches(12, 6, forward=True)
@@ -321,12 +321,11 @@ if __name__ == '__main__':
 
             # Select the sample (i.e., the row from the data frame of samples)
             try:
-                sample = df['omf_injection_snr_samples']['h1_snr']['0']
+                sample = df['omf_injection_snr_samples']['0']
             except KeyError:
                 raise KeyError('Given noise_id or template_id is too big!'
-                               'Maximum template_id value = {t}. Maximum sample_id value = {s}'.
-                               format(t = len(np.copy(templates['template_samples'])) - 1,
-                                      s = len(np.copy(injections['noise_samples']['h1_strain']))))
+                               'Maximum sample_id value = {s}'.
+                               format(s = len(np.copy(injections['noise_samples']['h1_strain'])))-1)
 
             # Create subplots for H1
             fig, axes1 = plt.subplots(nrows=1)
@@ -334,11 +333,11 @@ if __name__ == '__main__':
             for i, (det_name, det_string) in enumerate([('H1', 'h1_snr')]):
 
                 # axes1[i].plot(grid, sample[det_string], color='C0')
-                axes1[i].plot(df['omf_injection_snr_samples'][det_string][str(sample_id)], color='C0')
+                axes1.plot(df['omf_injection_snr_samples'][str(sample_id)], color='C0')
                 # axes1[i].set_xlim(-seconds_before, seconds_after)
                 # axes1[i].set_ylim(-150, 150)
-                axes1[i].tick_params('y', colors='C0', labelsize=8)
-                axes1[i].set_ylabel('{} SNR'
+                axes1.tick_params('y', colors='C0', labelsize=8)
+                axes1.set_ylabel('{} SNR'
                                     .format(det_name), color='C0', fontsize=8)
 
             # Add the injection parameters to the title
@@ -359,8 +358,8 @@ if __name__ == '__main__':
             plt.figtext(0.5, 0.9, 'Injection Parameters:\n' + injection_string, fontsize=8,ha='center')
 
             # Set x-labels
-            axes1[0].set_xticklabels([])
-            axes1[0].set_xlabel('Time from event time (in seconds)')
+            axes1.set_xticklabels([])
+            axes1.set_xlabel('Time from event time (in seconds)')
 
             # Adjust the size and spacing of the subplots
             plt.gcf().set_size_inches(12, 6, forward=True)

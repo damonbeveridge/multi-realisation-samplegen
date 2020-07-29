@@ -54,7 +54,7 @@ if __name__ == '__main__':
                         help='Path to the HDF sample file (generated with '
                              'generate_sample.py) to be used. '
                              'Default: ./output/default.hdf.',
-                        default='./output/default.hdf')
+                        default='./output/samples.hdf')
     parser.add_argument('--sample-id',
                         help='ID of the sample to be viewed (an integer '
                              'between 0 and n_injection_samples + '
@@ -132,32 +132,32 @@ if __name__ == '__main__':
     # If the sample has an injection, we need a second y-axis to plot the
     # pure (i.e., unwhitened) detector signals
     if has_injection:
-        axes2 = [ax.twinx() for ax in axes1]
+        axes2 = axes1.twinx()
     else:
         axes2 = None
 
     # Plot the strains for H1
     for i, (det_name, det_string) in enumerate([('H1', 'h1_strain')]):
 
-        axes1[i].plot(grid, sample[det_string], color='C0')
-        axes1[i].set_xlim(-seconds_before, seconds_after)
-        axes1[i].set_ylim(-150, 150)
-        axes1[i].tick_params('y', colors='C0', labelsize=8)
-        axes1[i].set_ylabel('Amplitude of Whitened Strain ({})'
+        axes1.plot(grid, sample[det_string], color='C0')
+        axes1.set_xlim(-seconds_before, seconds_after)
+        axes1.set_ylim(-150, 150)
+        axes1.tick_params('y', colors='C0', labelsize=8)
+        axes1.set_ylabel('Amplitude of Whitened Strain ({})'
                             .format(det_name), color='C0', fontsize=8)
 
     # If applicable, also plot the detector signals for H1
     if has_injection:
 
         # Get the maximum value of the detector signal (for norming them)
-        maximum = max(np.max(sample['h1_signal']))
+        maximum = np.max(sample['h1_signal'])
 
         for i, (det_name, det_string) in enumerate([('H1', 'h1_signal')]):
-            axes2[i].plot(grid, sample[det_string] / maximum, color='C1')
-            axes2[i].set_xlim(-seconds_before, seconds_after)
-            axes2[i].set_ylim(-1.2, 1.2)
-            axes2[i].tick_params('y', colors='C1', labelsize=8)
-            axes2[i].set_ylabel('Rescaled Amplitude of Simulated\n'
+            axes2.plot(grid, sample[det_string] / maximum, color='C1')
+            axes2.set_xlim(-seconds_before, seconds_after)
+            axes2.set_ylim(-1.2, 1.2)
+            axes2.tick_params('y', colors='C1', labelsize=8)
+            axes2.set_ylabel('Rescaled Amplitude of Simulated\n'
                                 'Detector Signal ({})'.format(det_name),
                                 color='C1', fontsize=8)
 
@@ -173,11 +173,11 @@ if __name__ == '__main__':
                 fontsize=8, ha='center')
 
     # Add a vertical line at the position of the event (x=0)
-    axes1[0].axvline(x=0, color='black', ls='--', lw=1)
+    axes1.axvline(x=0, color='black', ls='--', lw=1)
 
     # Set x-labels
-    axes1[0].set_xticklabels([])
-    axes1[0].set_xlabel('Time from event time (in seconds)')
+    axes1.set_xticklabels([])
+    axes1.set_xlabel('Time from event time (in seconds)')
 
     # Adjust the size and spacing of the subplots
     plt.gcf().set_size_inches(12, 6, forward=True)
