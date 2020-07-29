@@ -182,11 +182,6 @@ def three_det_main():
     f_low = static_arguments["f_lower"]
     delta_t = 1.0 / static_arguments["target_sampling_rate"]
 
-    # Keep track of all the SNRs (and parameters) we have generated
-    injection_parameters = dict(mass1=dict(),mass2=dict(),spin1z=dict(),spin2z=dict(),
-                                        ra=dict(),dec=dict(),coa_phase=dict(),inclination=dict(),
-                                        polarization=dict(),injection_snr=dict())
-
     # Initialise list of all parameters required for generating template waveforms
     param_dict=dict(injections=dict(mass1=[],mass2=[],spin1z=[],spin2z=[],ra=[],dec=[],coa_phase=[],
                                     inclination=[],polarization=[],injection_snr=[],f_lower=f_low,
@@ -201,16 +196,15 @@ def three_det_main():
     # Store number of templates
     n_templates = config['n_template_samples']
 
-    # Calculate trim samples
+    # Get trim cutoff
     trim_cutoff_low = config['snr_output_cutoff_low'] * static_arguments["target_sampling_rate"]
     trim_cutoff_high = config['snr_output_cutoff_high'] * static_arguments["target_sampling_rate"]
     trim_cutoff_variation = config['snr_output_cutoff_variation'] * static_arguments["target_sampling_rate"] / 2
-    inj_low=[]
-    inj_high=[]
-    noise_low=[]
-    noise_high=[]
-    temp_inj_low=[]
-    temp_inj_high=[]
+
+    # Initialize arrays for random offset values
+    inj_low, inj_high, noise_low, noise_high, temp_inj_low, temp_inj_high = ([] for i in range(6))
+
+    # Generate random time shits and apply to start and end times for each type of sample
     for i in range(n_injection_samples):
         rand = random.randint(-trim_cutoff_variation,trim_cutoff_variation)
         rand_low = trim_cutoff_low + rand
@@ -234,6 +228,7 @@ def three_det_main():
     # Compute SNR time-series
     # -------------------------------------------------------------------------
 
+    # Generate optimal SNR time series
     if filter_injection_samples:
 
         print('Generating OMF SNR time-series for injection samples...')
@@ -259,6 +254,7 @@ def three_det_main():
 
 
 
+    # Generate SNR time series with template bank, using injection and noise samples
     if filter_templates:
 
         print('Reading in the templates HDF file...', end=' ')

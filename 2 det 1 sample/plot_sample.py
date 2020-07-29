@@ -151,7 +151,7 @@ if __name__ == '__main__':
     if has_injection:
 
         # Get the maximum value of the detector signal (for norming them)
-        maximum = max(np.max(sample['h1_signal']), np.max(sample['l1_signal']), np.max(sample['v1_signal']))
+        maximum = max(np.max(sample['h1_signal']), np.max(sample['l1_signal']))
 
         for i, (det_name, det_string) in enumerate([('H1', 'h1_signal'),
                                                     ('L1', 'l1_signal')]):

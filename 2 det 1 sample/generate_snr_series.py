@@ -201,16 +201,15 @@ def main():
     # Store number of templates
     n_templates = config['n_template_samples']
 
-    # Calculate trim samples
+    # Get trim cutoff
     trim_cutoff_low = config['snr_output_cutoff_low'] * static_arguments["target_sampling_rate"]
     trim_cutoff_high = config['snr_output_cutoff_high'] * static_arguments["target_sampling_rate"]
     trim_cutoff_variation = config['snr_output_cutoff_variation'] * static_arguments["target_sampling_rate"] / 2
-    inj_low=[]
-    inj_high=[]
-    noise_low=[]
-    noise_high=[]
-    temp_inj_low=[]
-    temp_inj_high=[]
+
+    # Initialize arrays for random offset values
+    inj_low, inj_high, noise_low, noise_high, temp_inj_low, temp_inj_high = ([] for i in range(6))
+
+    # Generate random time shits and apply to start and end times for each type of sample
     for i in range(n_injection_samples):
         rand = random.randint(-trim_cutoff_variation,trim_cutoff_variation)
         rand_low = trim_cutoff_low + rand
@@ -234,6 +233,7 @@ def main():
     # Compute SNR time-series
     # -------------------------------------------------------------------------
 
+    # Generate optimal SNR time series
     if filter_injection_samples:
 
         print('Generating OMF SNR time-series for injection samples...')
@@ -259,6 +259,7 @@ def main():
 
 
 
+    # Generate SNR time series with template bank, using injection and noise samples
     if filter_templates:
 
         print('Reading in the templates HDF file...', end=' ')
