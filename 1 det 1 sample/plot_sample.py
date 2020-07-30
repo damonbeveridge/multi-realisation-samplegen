@@ -141,7 +141,7 @@ if __name__ == '__main__':
 
         axes1.plot(grid, sample[det_string], color='C0')
         axes1.set_xlim(-seconds_before, seconds_after)
-        axes1.set_ylim(-150, 150)
+        axes1.set_ylim(-200, 200)
         axes1.tick_params('y', colors='C0', labelsize=8)
         axes1.set_ylabel('Amplitude of Whitened Strain ({})'
                             .format(det_name), color='C0', fontsize=8)
@@ -176,7 +176,6 @@ if __name__ == '__main__':
     axes1.axvline(x=0, color='black', ls='--', lw=1)
 
     # Set x-labels
-    axes1.set_xticklabels([])
     axes1.set_xlabel('Time from event time (in seconds)')
 
     # Adjust the size and spacing of the subplots

@@ -230,7 +230,7 @@ if __name__ == '__main__':
             plt.figtext(0.5, 0.88, 'Template Parameters:\n' + template_string, fontsize=8,ha='center')
 
             # Set x-labels
-            axes1.set_xticklabels([])
+            #axes1.set_xticklabels([])
             axes1.set_xlabel('Time from event time (in seconds)')
 
             # Adjust the size and spacing of the subplots
@@ -294,7 +294,7 @@ if __name__ == '__main__':
             plt.figtext(0.5, 0.9, 'Template Parameters:\n' + template_string, fontsize=8,ha='center')
 
             # Set x-labels
-            axes1.set_xticklabels([])
+            #axes1.set_xticklabels([])
             axes1.set_xlabel('Time from event time (in seconds)')
 
             # Adjust the size and spacing of the subplots
