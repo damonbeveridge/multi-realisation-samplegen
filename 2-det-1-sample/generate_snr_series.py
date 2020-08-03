@@ -28,7 +28,7 @@ from utils.snr_processes import InjectionsBuildFiles, FiltersBuildFiles
 from pycbc.waveform import td_approximants
 
 # -----------------------------------------------------------------------------
-# Suppress Broken Pipe Messages
+# Suppress Broken Pipe
 # -----------------------------------------------------------------------------
 
 def suppress_broken_pipe_msg(f):
@@ -58,7 +58,7 @@ def suppress_broken_pipe_msg(f):
 # Main Code
 # -----------------------------------------------------------------------------
 
-def one_det_main(input_file_name="default.hdf",
+def two_det_main(input_file_name="default.hdf",
                  template_file_name="default_templates.hdf",
                  output_file_name="default_snrs.hdf", snr_range="default"):
     
@@ -320,7 +320,7 @@ def one_det_main(input_file_name="default.hdf",
     # -------------------------------------------------------------------------
     # Postliminaries
     # -------------------------------------------------------------------------
-
+    
     # Print the total run time
     print('Total runtime: {:.1f} seconds!'.format(time.time() - script_start))
     print('')
@@ -329,7 +329,7 @@ def one_det_main(input_file_name="default.hdf",
 
 @suppress_broken_pipe_msg
 def main():
-    one_det_main(snr_range="default")
+    two_det_main(snr_range="default")
 
 
 

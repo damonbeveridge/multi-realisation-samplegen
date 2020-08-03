@@ -18,7 +18,7 @@ import sys
 from functools import wraps
 from traceback import print_exc
 
-from generate_snr_series import one_det_main
+from generate_snr_series import two_det_main
 
 # -----------------------------------------------------------------------------
 # Suppress Broken Pipe Messages
@@ -118,7 +118,7 @@ def main():
         if os.path.exists(os.path.join(sample_files_path,output_file_name)):
             print(os.path.join(sample_files_path,output_file_name))
         else:
-            one_det_main(file, 'templates.hdf', output_file_name, snr_range)
+            two_det_main(file, 'templates.hdf', output_file_name, snr_range)
 
 
 
