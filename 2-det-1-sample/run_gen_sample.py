@@ -62,15 +62,47 @@ if __name__ == '__main__':
         pre_config = json.load(json_file)
 
     # -------------------------------------------------------------------------
+    # Get list of sample files already generated
+    # -------------------------------------------------------------------------
+
+    snr_range = 'snr10to20'
+
+    sample_files_path = './output/' + snr_range + '/'
+    nums=[]
+
+    file_list = sorted(os.listdir(sample_files_path))
+    file_list_2 = [x for x in file_list if "samples" in x]
+    print(file_list_2)
+
+    for i in file_list_2:
+        start = i.index('samples') + len('samples')
+        end = i.index('_snr')
+        nums.append(int(i[start:end]))
+        nums = sorted(nums)
+
+    # -------------------------------------------------------------------------
     # Generate Samples
     # -------------------------------------------------------------------------
 
-    # Seeds start from 0 and control file names
-    for random_seed in range(n_injections):
-        noise_random_seed = random_seed + n_injections
-        output_file_name = './snr30to50/samples' + str(random_seed) + '_snr30to50.hdf'
+    # Generating from scratch
+    if len(nums) == 0:
 
-        two_det_main(random_seed, noise_random_seed, output_file_name)
+        # Seeds start from 0
+        for random_seed in range(n_injections):
+            noise_random_seed = random_seed + n_injections
+            output_file_name = './' + snr_range + '/samples' + str(random_seed) + '_' + snr_range + '.hdf'
+
+            two_det_main(random_seed, noise_random_seed, output_file_name)
+
+    # Generating from last file
+    else:
+
+        # Seeds start from 1 above highest filename
+        for random_seed in range(n_injections):
+            noise_random_seed = nums[-1] + random_seed + n_injections
+            output_file_name = './' + snr_range + '/samples' + str(nums[-1] + random_seed) + '_' + snr_range + '.hdf'
+
+            two_det_main(random_seed, noise_random_seed, output_file_name)
 
 
 
